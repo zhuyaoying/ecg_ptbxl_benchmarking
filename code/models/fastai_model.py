@@ -159,6 +159,10 @@ def losses_plot(learner, path, filename="losses", last:int=None):
 class fastai_model(ClassificationModel):
     def __init__(self,name,n_classes,freq,outputfolder,input_shape,pretrained=False,input_size=2.5,input_channels=12,chunkify_train=False,chunkify_valid=True,bs=128,ps_head=0.5,lin_ftrs_head=[128],wd=1e-2,epochs=50,lr=1e-2,kernel_size=5,loss="binary_cross_entropy",pretrainedfolder=None,n_classes_pretrained=None,gradual_unfreezing=True,discriminative_lrs=True,epochs_finetuning=30,early_stopping=None,aggregate_fn="max",concat_train_val=False):
         super().__init__()
+
+        # Prefer CUDA when available so training runs on GPU automatically.
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        defaults.device = self.device
         
         self.name = name
         self.num_classes = n_classes if loss!= "nll_regression" else 2
@@ -248,7 +252,7 @@ class fastai_model(ClassificationModel):
 
             #exchange top layer
             output_layer = learn.model.get_output_layer()
-            output_layer_new = nn.Linear(output_layer.in_features,self.num_classes).cuda()
+            output_layer_new = nn.Linear(output_layer.in_features,self.num_classes).to(self.device)
             apply_init(output_layer_new, nn.init.kaiming_normal_)
             learn.model.set_output_layer(output_layer_new)
             

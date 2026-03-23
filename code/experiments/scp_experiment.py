@@ -100,6 +100,9 @@ class SCP_Experiment():
             elif modeltype == "fastai_model":
                 from models.fastai_model import fastai_model
                 model = fastai_model(modelname, n_classes, self.sampling_frequency, mpath, self.input_shape, **modelparams)
+            elif modeltype == "mamba_model":
+                from models.mamba_model import MambaModel
+                model = MambaModel(modelname, n_classes, self.sampling_frequency, mpath, self.input_shape, **modelparams)
             elif modeltype == "YOUR_MODEL_TYPE":
                 # YOUR MODEL GOES HERE!
                 from models.your_model import YourModel

@@ -16,6 +16,13 @@ Install the dependencies (wfdb, pytorch, torchvision, cudatoolkit, fastai, fastp
     conda env create -f ecg_env.yml
     conda activate ecg_env
 
+For the official Mamba experiments, use the separate environment file instead of modifying the legacy benchmark environment in place:
+
+    conda env create -f ecg_mamba_env.yml
+    conda activate ecg_mamba_env
+
+This keeps the original paper reproduction stack isolated from the newer PyTorch and `mamba-ssm` requirements.
+
 ### Get data
 Download and prepare the datasets (PTB-XL and ICBEB) via the following bash-script:
 
@@ -36,6 +43,12 @@ Depending on the executing environment, this will take up to several hours.
 Once finished, all trained models, predictions and results are stored in `output/`, 
 where for each experiment a sub-folder is created each with `data/`, `models/` and `results/` sub-sub-folders. 
 
+To run the official Mamba extension experiments separately, use:
+
+    python reproduce_mamba_results.py
+
+This launches Mamba-only PTB-XL experiments and keeps their outputs in separate `exp_mamba_*` folders.
+
 ### Download models and results
 
 We also provide a [compressed zip-archive](https://datacloud.hhi.fraunhofer.de/s/gLkjQL94d7FXBbS) containing the `output` folder corresponding to our runs including trained models and predictions from our runs mentioned in the leaderboard below. 
@@ -45,7 +58,7 @@ For creating custom benchmarking results our recommendation is as follows:
 
 1. create your model `code/models/your_model.py` which implements a standard classifier interface with `fit(X_train, y_train, X_val, y_val)` and `predict(X)`
 2. create a config file `code/configs/your_configs.py` with name, type and parameters (if needed)
-3. add your modeltype and model import to the cases in `perform`-function of `code/experiments/scp_experiment.py` (already added for demonstration purpose!)
+3. add your modeltype and model import to the cases in `perform`-function of `code/experiments/scp_experiment.py` (already added for demonstration purpose; `mamba_model` is included as a full example)
 4. add your model-config to `models` and perform your experiment as below (adjusted code of `code/reproduce_results.py`):
 
 ```python

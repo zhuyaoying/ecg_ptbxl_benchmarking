@@ -4,7 +4,8 @@ import re
 import glob
 import pickle
 import copy
-
+import wfdb
+import os
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -154,7 +155,15 @@ def load_raw_data_icbeb(df, sampling_rate, path):
 def load_raw_data_ptbxl(df, sampling_rate, path):
     if sampling_rate == 100:
         if os.path.exists(path + 'raw100.npy'):
-            data = np.load(path+'raw100.npy', allow_pickle=True)
+            # data = np.load(path+'raw100.npy', allow_pickle=True)
+            def load_raw_data_ptbxl(df, sampling_rate, path):
+                data = []
+                
+                for f in df.filename_lr:
+                    record_path = os.path.join(path, f)
+                    signal, meta = wfdb.rdsamp(record_path)
+                    data.append(signal)
+                return np.array(data)
         else:
             data = [wfdb.rdsamp(path+f) for f in tqdm(df.filename_lr)]
             data = np.array([signal for signal, meta in data])

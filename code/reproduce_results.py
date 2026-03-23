@@ -2,13 +2,14 @@ from experiments.scp_experiment import SCP_Experiment
 from utils import utils
 # model configs
 from configs.fastai_configs import *
+from configs.mamba_configs import *
 from configs.wavelet_configs import *
 
 
 def main():
     
     datafolder = '../data/ptbxl/'
-    datafolder_icbeb = '../data/ICBEB/'
+    # datafolder_icbeb = '../data/ICBEB/'
     outputfolder = '../output/'
 
     models = [
@@ -18,6 +19,7 @@ def main():
         conf_fastai_lstm_bidir,
         conf_fastai_fcn_wang,
         conf_fastai_inception1d,
+        conf_mamba_small,
         conf_wavelet_standard_nn,
         ]
 
@@ -47,13 +49,13 @@ def main():
     # EXPERIMENT BASED ICBEB DATA
     ##########################################
 
-    e = SCP_Experiment('exp_ICBEB', 'all', datafolder_icbeb, outputfolder, models)
-    e.prepare()
-    e.perform()
-    e.evaluate()
+    # e = SCP_Experiment('exp_ICBEB', 'all', datafolder_icbeb, outputfolder, models)
+    # e.prepare()
+    # e.perform()
+    # e.evaluate()
 
-    # generate great summary table
-    utils.ICBEBE_table()
+    # # generate great summary table
+    # utils.ICBEBE_table()
 
 if __name__ == "__main__":
     main()

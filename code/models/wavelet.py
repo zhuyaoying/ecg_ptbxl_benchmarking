@@ -134,7 +134,7 @@ class WaveletModel(ClassificationModel):
             # monitor validation error
             mc_loss = ModelCheckpoint(self.outputfolder +'best_loss_model.h5', monitor='val_loss', mode='min', verbose=1, save_best_only=True)
             #mc_score = ModelCheckpoint(self.outputfolder +'best_score_model.h5', monitor='val_keras_macro_auroc', mode='max', verbose=1, save_best_only=True)
-            self.model.fit(XFT_train, y_train, validation_data=(XFT_val, y_val), epochs=self.epochs, batch_size=128, callbacks=[mc_loss])#, mc_score])
+            self.model.fit(XFT_train, y_train, validation_data=(XFT_val, y_val), epochs=self.epochs, batch_size=1024, callbacks=[mc_loss])#, mc_score])
             self.model.save(self.outputfolder +'last_model.h5')
 
     def predict(self, X):

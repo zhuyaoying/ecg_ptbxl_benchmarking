@@ -1,4 +1,7 @@
 
+
+
+
 __pycache__
 **/*.pdf
 **/*.toc
@@ -11,5 +14,15 @@ __pycache__
 **/*.pyc
 **/*.fls
 **/*.fdb_latexmk
-
+*.csv
+*.png
+*.pth
+*.npy
+*.pkl
+*.yml
 .ipynb_checkpoints
+
+
+/data/
+/output/
+/output
